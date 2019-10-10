@@ -1,0 +1,31 @@
+<div class="card">
+    <h5 class="card-header" style="background: #9cb6ef;color:#fff">Clientes</h5>
+    <div class="card-body">
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Handle</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cliente of clientes">
+                    <th scope="row">{{cliente.id}}</th>
+                    <td>{{cliente.nombre}}</td>
+                    <td>{{cliente.apellido}}</td>
+                    <td>{{cliente.customerUrl}}</td>
+                    <td>
+                        <button type="button" name="editar" [routerLink]="['form', cliente.id]" class="btn btn-primary btn-sm">editar</button>
+                        <button (click)="borrarCliente(cliente.id)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+    </div>
+</div>
