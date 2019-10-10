@@ -45,6 +45,7 @@ export class ClienteService {
       console.log(resp);
     });
 }
+// Pipe agarrara todos los posibles errores en catchError en caso se haber
   getCliente(id): Observable<Cliente> {
       const url = URL_SERVICIOS + '/clientes/' + id;
       return this.http.get<Cliente>(url)
