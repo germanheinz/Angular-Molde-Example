@@ -25,6 +25,7 @@ const pagesRoutes: Routes = [
             { path: 'clientes', component: ClientesComponent, data: { titulo: 'Clientes' } },
             { path: 'clientes/form', component: FormClienteComponent, data: { titulo: 'Form' } },
             { path: 'clientes/form/:id', component: FormClienteComponent, data: { titulo: 'Form' } },
+            { path: 'clientes/page/:page', component: ClientesComponent, data: { titulo: 'Pages' } },
             { path: 'account-settings', component: AccoutSettingsComponent, data: { titulo: 'Ajustes de Tema' } },
             { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
         ]

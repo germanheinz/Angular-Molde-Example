@@ -26,6 +26,7 @@ import { RxjsComponent } from './rxjs/rxjs.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { CommonModule } from '@angular/common';
 import { FormClienteComponent } from './form-cliente/form-cliente.component';
+import { PaginatorComponent } from './paginator/paginator.component';
 
 @NgModule({
     declarations: [
@@ -39,7 +40,8 @@ import { FormClienteComponent } from './form-cliente/form-cliente.component';
         PromesasComponent,
         RxjsComponent,
         ClientesComponent,
-        FormClienteComponent
+        FormClienteComponent,
+        PaginatorComponent
     ],
     exports: [
         DashboardComponent,

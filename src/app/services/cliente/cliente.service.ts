@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 import { Cliente } from 'src/app/models/cliente.model';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 
 @Injectable()
@@ -31,6 +31,34 @@ export class ClienteService {
       return resp;
      });
    }
+   
+   /*cargarClientesPages(page: number): Observable<any> {
+    const url = URL_SERVICIOS + '/clientes/page/' + page;
+    console.log(url);
+    return this.http.get(url)
+    .map((resp: any) => {
+     console.log(resp.content);
+     (resp.content as Cliente[]).map(cliente => {
+        console.log(cliente);
+        return cliente;
+     });
+     return resp;
+    });
+  }*/
+
+  cargarClientesPages(page: number): Observable<any> {
+    const url = URL_SERVICIOS + '/clientes/page/' + page;
+    console.log(url);
+    return this.http.get(url)
+    .pipe(
+      tap((resp: any) => {
+        console.log('tap 1');
+        (resp.content as Cliente[]).forEach(cliente => {
+            console.log(cliente.nombre);
+        });
+      }),
+    );
+  }
    obtenerCliente(id: String) {
      const url = URL_SERVICIOS + '/clientes/' + id;
      return this.http.get(url)

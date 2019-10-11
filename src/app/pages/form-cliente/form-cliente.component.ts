@@ -43,7 +43,7 @@ export class FormClienteComponent implements OnInit {
           this.errores = err.error.errors as string[];
           console.error('Código del error desde el backend: ' + err.status);
         console.error(this.errores);
-        //console.log(err.error);
+        // console.log(err.error);
         }
       );
   }
