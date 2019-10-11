@@ -62,6 +62,8 @@ export class ClienteService {
     return this.http.put<any>(url, cliente, { headers: this.httpHeaders }).pipe(
       catchError(e => {
 
+        // Maneje todos los errores en el backend - si alla hay error
+        // sera un bad Request (400) entonces pregunto si el status es 400
         if (e.status === 400) {
           return throwError(e);
         }
