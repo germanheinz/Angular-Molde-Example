@@ -13,6 +13,7 @@ export class ClientesComponent implements OnInit {
   clientes: Cliente[] = [];
   cliente = Cliente;
   cargando = true;
+  paginadorPadre: any;
 
   constructor(public clienteService: ClienteService,
               public activatedRoute: ActivatedRoute) { }
@@ -27,10 +28,11 @@ export class ClientesComponent implements OnInit {
       page = 0;
     }
     // this.cargarClientesPaginado();
-    this.clienteService.cargarClientesPages(page).subscribe(cliente => {
-      console.log(cliente.content);
-      this.clientes = cliente.content;
+    this.clienteService.cargarClientesPages(page).subscribe(response => {
+      console.log(response.totalPages);
+      this.clientes = response.content as Cliente[];
       console.log(this.clientes);
+      this.paginadorPadre = response;
     });
   });
   }

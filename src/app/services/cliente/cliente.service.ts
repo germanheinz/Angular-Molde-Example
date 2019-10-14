@@ -31,7 +31,7 @@ export class ClienteService {
       return resp;
      });
    }
-   
+
    /*cargarClientesPages(page: number): Observable<any> {
     const url = URL_SERVICIOS + '/clientes/page/' + page;
     console.log(url);
