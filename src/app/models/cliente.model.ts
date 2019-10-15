@@ -6,4 +6,5 @@ export class Cliente {
         public email: string;
         public customerUrl: String;
         public id: string;
+        public foto: String;
 }
