@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { URL_SERVICIOS } from '../../config/config';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest, HttpEvent } from '@angular/common/http';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 import { Cliente } from 'src/app/models/cliente.model';
@@ -102,26 +102,28 @@ export class ClienteService {
       })
     );
   }
-  subirFoto(archivo: File, id): Observable<Cliente> {
+  // Tengo que cambiar el retorno, que es un obsevable orignalmente, 
+  // se convierte en un HttpEvent
+  // subirFoto(archivo: File, id): Observable<Cliente> {
+    subirFoto(archivo: File, id): Observable<HttpEvent<{}>> {
     const url = URL_SERVICIOS + '/clientes/upload';
     console.log('/*****/' + url);
     const formData = new FormData();
     formData.append('archivo', archivo);
     formData.append('id', id);
-    return this.http.post(url, formData).pipe(
-      map((response: any) =>
-        response.cliente as Cliente),
-        catchError(e => {
-          // Maneje todos los errores en el backend - si alla hay error
-          // sera un bad Request (400) entonces pregunto si el status es 400
-          if (e.status === 400) {
-            return throwError(e);
-          }
-          console.error(e.error.mensaje);
-          // swal(e.error.mensaje, e.error.error, 'error');
-          return throwError(e);
-        })
-      );
+
+    /*
+    Sacado de la documentacion de Angular.io
+    const req = new HttpRequest('POST', '/upload/file', file, {
+      reportProgress: true
+    });
+    */
+//  Debo cambiar esta forma para que aparezca barra progreso
+    // return this.http.post(url, formData).pipe(
+    const req = new HttpRequest('POST', url, formData, {
+      reportProgress: true
+    });
+    return this.http.request(req);
   }
 
 }

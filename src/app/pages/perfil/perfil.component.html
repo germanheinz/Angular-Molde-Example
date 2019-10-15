@@ -25,6 +25,11 @@
                             <button (click)="subirFoto()" [disabled]="!fotoSeleccionada" class="btn btn-outline-secondary" type="button">Upload</button>
                         </div>
                     </div>
+                    <div *ngIf="progreso > 0 " class="progress">
+                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [ngStyle]="{width:progreso+'%'}" aria-valuenow="25" attr.aria-valuemin="{{progreso}}" aria-valuemax="100">
+                            {{progreso}}%
+                        </div>
+                    </div>
                 </div>
                 <div class="col-sm">
                     <img src="http://localhost:8080/api/clientes/upload/img/{{cliente.foto}}" *ngIf="cliente?.foto" alt="" class="img-thumbnail rounded">
