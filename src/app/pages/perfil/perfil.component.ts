@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Cliente } from 'src/app/models/cliente.model';
 import { ClienteService } from '../../services/cliente/cliente.service';
 import { ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert';
 import { HttpEventType } from '@angular/common/http';
+import { ModalService } from '../../services/modal/modal.service';
 
 @Component({
   selector: 'app-perfil',
@@ -13,24 +14,17 @@ import { HttpEventType } from '@angular/common/http';
 export class PerfilComponent implements OnInit {
 
 
-  cliente: Cliente;
+  @Input() cliente: Cliente;
   private fotoSeleccionada: File;
   progreso: Number = 0;
 // ActivatedRoute es para editar un cliente para podernos subscribir cuando cambia un parametro en ID
   constructor(public clienteService: ClienteService,
-              public activatedRoute: ActivatedRoute) { }
+              public activatedRoute: ActivatedRoute,
+              public modalService: ModalService) { }
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe(params => {
-    const id: number = +params.get('id');
-    console.log(id);
-    if (id) {
-    this.clienteService.getCliente(id).subscribe(cliente => {
-    this.cliente = cliente;
-    });
-    }
-    });
   }
+
   seleccionarFoto(event) {
     this.fotoSeleccionada = event.target.files[0];
     this.progreso = 0;
@@ -55,12 +49,19 @@ export class PerfilComponent implements OnInit {
       // tslint:disable-next-line:prefer-const
       let response: any = event.body;
       this.cliente = response.cliente as Cliente;
+      this.modalService.notificarUpload.emit(this.cliente);
       swal('Good job!', response.mensaje, 'success');
     }
     swal('Good job!', 'You clicked the button!', 'success');
     console.log('foto subida correctamente');
+    console.log('paso por 2');
     });
   }
+  }
+  cerrarModal() {
+    this.modalService.cerrarModal();
+    this.fotoSeleccionada = null;
+    this.progreso = 0;
   }
 
 

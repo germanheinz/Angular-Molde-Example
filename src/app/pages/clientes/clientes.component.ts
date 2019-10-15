@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Cliente } from 'src/app/models/cliente.model';
 import { ClienteService } from '../../services/cliente/cliente.service';
 import { ActivatedRoute } from '@angular/router';
-
+import { ModalService } from '../../services/modal/modal.service';
+import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
@@ -14,9 +15,11 @@ export class ClientesComponent implements OnInit {
   cliente = Cliente;
   cargando = true;
   paginadorPadre: any;
+  clienteSeleccionado: Cliente;
 
   constructor(public clienteService: ClienteService,
-              public activatedRoute: ActivatedRoute) { }
+              public activatedRoute: ActivatedRoute,
+              public modalService: ModalService) { }
 
   ngOnInit() {
 
@@ -33,6 +36,14 @@ export class ClientesComponent implements OnInit {
       this.clientes = response.content as Cliente[];
       console.log(this.clientes);
       this.paginadorPadre = response;
+    });
+  });
+  this.modalService.notificarUpload.subscribe(cliente => {
+    this.clientes = this.clientes.map(clienteOriginal => {
+      if (cliente.id === clienteOriginal.id) {
+        clienteOriginal.foto = cliente.foto;
+      }
+      return clienteOriginal;
     });
   });
   }
@@ -63,5 +74,9 @@ export class ClientesComponent implements OnInit {
      console.log('hole');
      this.cargarClientes();
     });
+    }
+    abrirModal(cliente: Cliente) {
+      this.clienteSeleccionado = cliente;
+      this.modalService.abrirModal();
     }
   }
