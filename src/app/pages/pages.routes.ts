@@ -9,6 +9,7 @@ import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { FormClienteComponent } from './form-cliente/form-cliente.component';
+import { PerfilComponent } from './perfil/perfil.component';
 
 
 
@@ -26,6 +27,7 @@ const pagesRoutes: Routes = [
             { path: 'clientes/form', component: FormClienteComponent, data: { titulo: 'Form' } },
             { path: 'clientes/form/:id', component: FormClienteComponent, data: { titulo: 'Form' } },
             { path: 'clientes/page/:page', component: ClientesComponent, data: { titulo: 'Pages' } },
+            { path: 'clientes/perfil/:id', component: PerfilComponent, data: { titulo: 'Pages' } },
             { path: 'account-settings', component: AccoutSettingsComponent, data: { titulo: 'Ajustes de Tema' } },
             { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
         ]

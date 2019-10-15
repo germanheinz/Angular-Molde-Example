@@ -27,6 +27,7 @@ import { ClientesComponent } from './clientes/clientes.component';
 import { CommonModule } from '@angular/common';
 import { FormClienteComponent } from './form-cliente/form-cliente.component';
 import { PaginatorComponent } from './paginator/paginator.component';
+import { PerfilComponent } from './perfil/perfil.component';
 
 @NgModule({
     declarations: [
@@ -41,7 +42,8 @@ import { PaginatorComponent } from './paginator/paginator.component';
         RxjsComponent,
         ClientesComponent,
         FormClienteComponent,
-        PaginatorComponent
+        PaginatorComponent,
+        PerfilComponent
     ],
     exports: [
         DashboardComponent,
