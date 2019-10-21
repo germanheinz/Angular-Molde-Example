@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../../services/auth/usuario.service';
 import swal from 'sweetalert';
-import {MatButtonModule} from '@angular/material/button';
 import { Router } from '@angular/router';
 
 @Component({
