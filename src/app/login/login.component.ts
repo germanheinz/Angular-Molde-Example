@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import swal from 'Sweetalert';
 import { Usuario } from '../models/usuario.model';
+import { UsuarioService } from '../services/auth/usuario.service';
 declare function init_plugins();
 
 @Component({
@@ -11,54 +12,53 @@ declare function init_plugins();
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  // Formulario
+
+  // FORMULARIO
   form: FormGroup;
-
-
-  usuarios: Usuario[] = [];
   usuario: Usuario;
-  email = new FormControl('', [Validators.required, Validators.email]);
-  username = new FormControl('', [Validators.required]);
 
-  constructor( public router: Router) {
-    this.usuario = new Usuario();
+  constructor(public usuarioService: UsuarioService, public router: Router) {
    }
 
   ngOnInit() {
     init_plugins();
+    if (this.usuarioService.isAuthenticated()) {
+      swal('Login', `Hola ${this.usuarioService.usuario.username} ya estas autenticado`, 'info');
+      this.router.navigate(['/clientes']);
+    }
     this.form = new FormGroup({
-      nombre: new FormControl('', [Validators.required, Validators.maxLength(10)])
+      username : new FormControl('', [Validators.required]),
+      password : new FormControl('', [Validators.required])
     });
-
   }
 
-  /*login(): void {
-    console.log(this.usuario);
-    if (this.usuario.username == null || this.usuario.password == null) {
-      swal('Error Login', 'Username vacias', 'error');
-      return;
-    }
-
-  }*/
+  // LOGIN //
   login() {
     console.log(this.form.value);
-    // tslint:disable-next-line: prefer-const
-    let user = new Usuario();
-    user.nombre = this.form.value.nombre;
-    console.log(user);
-  }
-  getErrorMessage() {
-    return this.email.hasError('required') ? 'You must enter a value' :
-        this.email.hasError('email') ? 'Not a valid email' :
-            '';
-  }
 
-  /* ****************************** */
+    this.usuario = new Usuario();
+    this.usuario.username = this.form.value.username;
+    this.usuario.password = this.form.value.password;
+    console.log(this.usuario);
+
+    this.usuarioService.login(this.usuario).subscribe(response => {
+      console.log(response);
+
+      this.usuarioService.guardarUsuario(response.access_token);
+      this.usuarioService.guardarToken(response.access_token);
+      // tslint:disable-next-line: prefer-const
+      let usuario = this.usuarioService.usuario;
+
+      swal('Login', `Hola ${usuario.username} has iniciado sesion con exito`, 'success');
+      this.router.navigate(['/clientes']);
+    }, error => {
+        if (error.status === 400 || error.status === 401) {
+          swal('Error Login', 'Datos incorrectos', 'error');
+        }
+    });
+  }
+  // METODO ERRORES //
   public hasError = (controlName: string, errorName: string) => {
     return this.form.controls[controlName].hasError(errorName);
   }
-
-  private executeOwnerCreation = (ownerFormValue) => { };
-
 }
-/// https://code-maze.com/angular-material-form-validation/

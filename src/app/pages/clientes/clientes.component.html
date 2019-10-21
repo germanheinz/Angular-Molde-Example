@@ -22,8 +22,8 @@
                         <td>{{cliente.apellido}}</td>
                         <td>{{cliente.customerUrl}}</td>
                         <td>
-                            <button type="button" name="editar" [routerLink]="['form', cliente.id]" class="btn btn-primary btn-sm">editar</button>
-                            <button (click)="borrarCliente(cliente.id)" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
+                            <button type="button" name="editar" *ngIf="usuarioService.hasRole('ROLE_ADMIN')" [routerLink]="['form', cliente.id]" class="btn btn-primary btn-sm">editar</button>
+                            <button (click)="borrarCliente(cliente.id)" *ngIf="usuarioService.hasRole('ROLE_ADMIN')" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
                         </td>
                 </tr>
             </tbody>

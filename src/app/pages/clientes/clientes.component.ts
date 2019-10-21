@@ -4,6 +4,8 @@ import { ClienteService } from '../../services/cliente/cliente.service';
 import { ActivatedRoute } from '@angular/router';
 import { ModalService } from '../../services/modal/modal.service';
 import { map } from 'rxjs/operators';
+import { UsuarioService } from '../../services/auth/usuario.service';
+
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
@@ -19,7 +21,8 @@ export class ClientesComponent implements OnInit {
 
   constructor(public clienteService: ClienteService,
               public activatedRoute: ActivatedRoute,
-              public modalService: ModalService) { }
+              public modalService: ModalService,
+              public usuarioService: UsuarioService) { }
 
   ngOnInit() {
 
@@ -56,14 +59,6 @@ export class ClientesComponent implements OnInit {
     this.cargando = false;
     });
   }
-  /*cargarClientesPaginado() {
-    this.clienteService.cargarClientesPages(this.page).subscribe(cliente => {
-      console.log(cliente.content);
-      this.clientes = cliente.content;
-      console.log(this.clientes);
-    });
-  }*/
-
   obtenerCliente(id: string) {
     this.clienteService.obtenerCliente(id).subscribe(clientes => {
     console.log('Resultado de obtener Cliente' + clientes);

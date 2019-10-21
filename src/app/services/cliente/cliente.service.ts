@@ -6,6 +6,8 @@ import { Cliente } from 'src/app/models/cliente.model';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { map } from 'rxjs/operators';
+import { UsuarioService } from '../auth/usuario.service';
+import swal from 'sweetalert';
 
 
 @Injectable()
@@ -18,15 +20,33 @@ export class ClienteService {
 
   constructor(
     public router: Router,
-    public http: HttpClient
+    public http: HttpClient,
+    public usuarioService: UsuarioService
     ) {
     console.log('Servicio cargar clientes');
     this.cargarClientes();
    }
+
+  private agregarAuthorizationHeader() {
+    const token = this.usuarioService.token;
+    if (token != null) {
+      return this.httpHeaders.append('Authorization', 'Bearer ' + token);
+    }
+    return this.httpHeaders;
+  }
+
 // Metodo para chequear si esta Autorizado
    private isNoAutorizado(e): boolean {
-    if (e.status === 401 || e.status === 403) {
+    if (e.status === 401) {
+      if (this.usuarioService.isAuthenticated()) {
+        this.usuarioService.logout();
+      }
       this.router.navigate(['/login']);
+      return true;
+    }
+    if (e.status === 403) {
+      swal('Acceso denegado', `Hola ${this.usuarioService.usuario.username}`, 'warning');
+      this.router.navigate(['/clientes']);
       return true;
     }
     return false;
@@ -40,21 +60,6 @@ export class ClienteService {
       return resp;
      }));
    }
-
-   /*cargarClientesPages(page: number): Observable<any> {
-    const url = URL_SERVICIOS + '/clientes/page/' + page;
-    console.log(url);
-    return this.http.get(url)
-    .map((resp: any) => {
-     console.log(resp.content);
-     (resp.content as Cliente[]).map(cliente => {
-        console.log(cliente);
-        return cliente;
-     });
-     return resp;
-    });
-  }*/
-
   cargarClientesPages(page: number): Observable<any> {
     const url = URL_SERVICIOS + '/clientes/page/' + page;
     console.log(url);
@@ -80,7 +85,7 @@ export class ClienteService {
    // tslint:disable-next-line: ban-types
    borrarCliente(id: String) {
      const url = URL_SERVICIOS + '/clientes/' + id;
-     return this.http.delete(url)
+     return this.http.delete(url, {headers: this.agregarAuthorizationHeader()})
     .pipe(
       catchError(e => {
         if (this.isNoAutorizado(e)) {
@@ -94,7 +99,7 @@ export class ClienteService {
 // Pipe agarrara todos los posibles errores en catchError en caso se haber
   getCliente(id): Observable<Cliente> {
       const url = URL_SERVICIOS + '/clientes/' + id;
-      return this.http.get<Cliente>(url)
+      return this.http.get<Cliente>(url, {headers: this.agregarAuthorizationHeader()})
       .pipe(
         catchError(e => {
 
@@ -110,7 +115,7 @@ export class ClienteService {
   }
   update(cliente: Cliente): Observable<any> {
     const url = URL_SERVICIOS + '/clientes/' + cliente.id;
-    return this.http.put<any>(url, cliente, { headers: this.httpHeaders }).pipe(
+    return this.http.put<any>(url, cliente, {headers: this.agregarAuthorizationHeader()}).pipe(
       catchError(e => {
         if (this.isNoAutorizado(e)) {
           return throwError(e);
@@ -122,7 +127,7 @@ export class ClienteService {
         }
 
         console.error(e.error.mensaje);
-        // swal(e.error.mensaje, e.error.error, 'error');
+        swal(e.error.mensaje, e.error.error, 'error');
         return throwError(e);
       })
     );
@@ -137,16 +142,16 @@ export class ClienteService {
         formData.append('archivo', archivo);
         formData.append('id', id);
 
-    /*
-    Sacado de la documentacion de Angular.io
-    const req = new HttpRequest('POST', '/upload/file', file, {
-      reportProgress: true
-    });
-    */
+        let httpHeaders = new HttpHeaders();
+        const token = this.usuarioService.token;
+        if (token != null) {
+          httpHeaders = httpHeaders.append('Authorization', 'Bearer ' + token);
+        }
 //    Debo cambiar esta forma para que aparezca barra progreso
 //    return this.http.post(url, formData).pipe(
         const req = new HttpRequest('POST', url, formData, {
-          reportProgress: true
+          reportProgress: true,
+          headers: httpHeaders
         });
         return this.http.request(req);
   }

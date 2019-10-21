@@ -7,6 +7,8 @@ import { RxjsComponent } from './rxjs/rxjs.component';
 import { ClientesComponent } from './clientes/clientes.component';
 import { FormClienteComponent } from './form-cliente/form-cliente.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { AuthGuard } from '../guards/auth.guard';
+import { RoleGuard } from '../guards/role.guard';
 
 
 
@@ -19,8 +21,8 @@ const pagesRoutes: Routes = [
             { path: 'promesas', component: PromesasComponent, data: { titulo: 'Promesas' } },
             { path: 'rxjs', component: RxjsComponent, data: { titulo: 'RxJs' } },
             { path: 'clientes', component: ClientesComponent, data: { titulo: 'Clientes' } },
-            { path: 'clientes/form', component: FormClienteComponent, data: { titulo: 'Form' } },
-            { path: 'clientes/form/:id', component: FormClienteComponent, data: { titulo: 'Form' } },
+            { path: 'clientes/form', component: FormClienteComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN' } },
+            { path: 'clientes/form/:id', component: FormClienteComponent, data: { titulo: 'Form' }, canActivate: [AuthGuard]  },
             { path: 'clientes/page/:page', component: ClientesComponent, data: { titulo: 'Pages' } },
             { path: 'clientes/perfil/:id', component: PerfilComponent, data: { titulo: 'Pages' } },
             { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
