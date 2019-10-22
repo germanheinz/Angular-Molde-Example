@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     init_plugins();
     if (this.usuarioService.isAuthenticated()) {
-      swal('Login', `Hola ${this.usuarioService.usuario.username} ya estas autenticado`, 'info');
+      // swal('Login', `Hola ${this.usuarioService.usuario.username} ya estas autenticado`, 'info');
       this.router.navigate(['/clientes']);
     }
     this.form = new FormGroup({
@@ -49,11 +49,11 @@ export class LoginComponent implements OnInit {
       // tslint:disable-next-line: prefer-const
       let usuario = this.usuarioService.usuario;
 
-      swal('Login', `Hola ${usuario.username} has iniciado sesion con exito`, 'success');
+      // swal('Login', `Hola ${usuario.username} has iniciado sesion con exito`, 'success');
       this.router.navigate(['/clientes']);
     }, error => {
         if (error.status === 400 || error.status === 401) {
-          swal('Error Login', 'Datos incorrectos', 'error');
+          // swal('Error Login', 'Datos incorrectos', 'error');
         }
     });
   }

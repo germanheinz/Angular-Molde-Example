@@ -21,6 +21,12 @@ import { CommonModule } from '@angular/common';
 import { FormClienteComponent } from './form-cliente/form-cliente.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { DataTableComponent } from './data-table/data-table.component';
+import { MaterialModule } from './material';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatListModule, MatIconModule, MatToolbarModule, MatSidenavModule } from '@angular/material';
 
 @NgModule({
     declarations: [
@@ -31,17 +37,26 @@ import { PerfilComponent } from './perfil/perfil.component';
         ClientesComponent,
         FormClienteComponent,
         PaginatorComponent,
-        PerfilComponent
+        PerfilComponent,
+        DataTableComponent,
     ],
     exports: [
-        DashboardComponent
+        DashboardComponent,
     ],
     imports: [
         SharedModule,
         PAGES_ROUTES,
         FormsModule,
         ChartsModule,
-        CommonModule
+        CommonModule,
+        MatToolbarModule,
+        MatSidenavModule,
+        MaterialModule,
+        MatIconModule,
+        MatListModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule
     ]
 })
 export class PagesModule { }

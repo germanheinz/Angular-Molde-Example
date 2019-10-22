@@ -8,8 +8,8 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/cor
 export class PaginatorComponent implements OnInit, OnChanges {
   @Input() paginadorHijo: any;
   paginas: number[];
-desde: number;
-hasta: number;
+  desde: number;
+  hasta: number;
 
   constructor() { }
 

@@ -9,6 +9,8 @@ import { FormClienteComponent } from './form-cliente/form-cliente.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { RoleGuard } from '../guards/role.guard';
+import { DataTableComponent } from './data-table/data-table.component';
+import { DataTable2Component } from './data-table2/data-table2.component';
 
 
 
@@ -25,6 +27,7 @@ const pagesRoutes: Routes = [
             { path: 'clientes/form/:id', component: FormClienteComponent, data: { titulo: 'Form' }, canActivate: [AuthGuard]  },
             { path: 'clientes/page/:page', component: ClientesComponent, data: { titulo: 'Pages' } },
             { path: 'clientes/perfil/:id', component: PerfilComponent, data: { titulo: 'Pages' } },
+            { path: 'data-table', component: DataTableComponent, data: { titulo: 'Data-Table' } },
             { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
         ]
     }

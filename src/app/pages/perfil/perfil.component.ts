@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Cliente } from 'src/app/models/cliente.model';
 import { ClienteService } from '../../services/cliente/cliente.service';
 import { ActivatedRoute } from '@angular/router';
-import swal from 'Sweetalert';
+import swal from 'sweetalert';
 import { HttpEventType } from '@angular/common/http';
 import { ModalService } from '../../services/modal/modal.service';
 
