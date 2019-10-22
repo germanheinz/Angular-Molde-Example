@@ -10,8 +10,6 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { RoleGuard } from '../guards/role.guard';
 import { DataTableComponent } from './data-table/data-table.component';
-import { DataTable2Component } from './data-table2/data-table2.component';
-
 
 
 const pagesRoutes: Routes = [
