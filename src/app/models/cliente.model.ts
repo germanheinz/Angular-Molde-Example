@@ -1,10 +1,13 @@
 // Modelo Cliente
+import { Factura } from './factura.model';
+
 export class Cliente {
 
-        public nombre: string;
-        public apellido: string;
-        public email: string;
-        public customerUrl: string;
-        public id: string;
-        public foto: string;
+        nombre: string;
+        apellido: string;
+        email: string;
+        customerUrl: string;
+        id: string;
+        foto: string;
+        facturas: Factura [] = [];
 }

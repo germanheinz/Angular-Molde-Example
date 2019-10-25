@@ -21,12 +21,13 @@ import { CommonModule } from '@angular/common';
 import { FormClienteComponent } from './form-cliente/form-cliente.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { PerfilComponent } from './perfil/perfil.component';
-import { DataTableComponent } from './data-table/data-table.component';
 import { MaterialModule } from './material';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatListModule, MatIconModule, MatToolbarModule, MatSidenavModule } from '@angular/material';
+import { DataTableComponent } from './data-table/data-table.component';
+import { DetalleFacturaComponent } from './factura/detalle-factura.component';
 
 @NgModule({
     declarations: [
@@ -39,6 +40,7 @@ import { MatListModule, MatIconModule, MatToolbarModule, MatSidenavModule } from
         PaginatorComponent,
         PerfilComponent,
         DataTableComponent,
+        DetalleFacturaComponent
     ],
     exports: [
         DashboardComponent,

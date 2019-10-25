@@ -10,6 +10,7 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { RoleGuard } from '../guards/role.guard';
 import { DataTableComponent } from './data-table/data-table.component';
+import { DetalleFacturaComponent } from './factura/detalle-factura.component';
 
 
 const pagesRoutes: Routes = [
@@ -21,11 +22,12 @@ const pagesRoutes: Routes = [
             { path: 'promesas', component: PromesasComponent, data: { titulo: 'Promesas' } },
             { path: 'rxjs', component: RxjsComponent, data: { titulo: 'RxJs' } },
             { path: 'clientes', component: ClientesComponent, data: { titulo: 'Clientes' } },
+            { path: 'Tabla', component: DataTableComponent, data: { titulo: 'tabla' } },
             { path: 'clientes/form', component: FormClienteComponent, canActivate: [AuthGuard, RoleGuard], data: { role: 'ROLE_ADMIN' } },
             { path: 'clientes/form/:id', component: FormClienteComponent, data: { titulo: 'Form' }, canActivate: [AuthGuard]  },
             { path: 'clientes/page/:page', component: ClientesComponent, data: { titulo: 'Pages' } },
             { path: 'clientes/perfil/:id', component: PerfilComponent, data: { titulo: 'Pages' } },
-            { path: 'data-table', component: DataTableComponent, data: { titulo: 'Data-Table' } },
+            { path: 'clientes/factura/:id', component: DetalleFacturaComponent, data: { titulo: 'Factura' } },
             { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
         ]
     }

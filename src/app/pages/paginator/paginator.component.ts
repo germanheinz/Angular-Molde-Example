@@ -11,7 +11,9 @@ export class PaginatorComponent implements OnInit, OnChanges {
   desde: number;
   hasta: number;
 
-  constructor() { }
+  constructor() {
+    console.log('$$$$$$$' + this.paginadorHijo);
+   }
 
   ngOnInit() {
   this.initPaginador();
@@ -19,7 +21,6 @@ export class PaginatorComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     // tslint:disable-next-line:prefer-const
     let paginadorActualizado = changes['paginadorHijo'];
-
     if (paginadorActualizado) {
       this.initPaginador();
     }

@@ -3,43 +3,38 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
-
-// TODO: Replace this with your own data model type
-export interface DataTableItem {
-  name: string;
-  id: number;
-  lastname: string;
-}
-
-// TODO: replace this with real data from your application
-const EXAMPLE_DATA: DataTableItem[] = [
-  {id: 1, name: 'Hydrogen', lastname: 'test' },
-  {id: 2, name: 'Helium', lastname: 'test' },
-  {id: 3, name: 'Lithium', lastname: 'test' },
-  {id: 4, name: 'Beryllium', lastname: 'test' },
-  {id: 5, name: 'Boron', lastname: 'test' },
-];
+import { Cliente } from '../../models/cliente.model';
+import { ClienteService } from '../../services/cliente/cliente.service';
 
 /**
  * Data source for the DataTable view. This class should
  * encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
-export class DataTableDataSource extends DataSource<DataTableItem> {
-  data: DataTableItem[] = EXAMPLE_DATA;
+
+export class DataTableDataSource extends DataSource<Cliente> {
+
+  clientes: Cliente[];
+  data: Cliente[] = [];
   paginator: MatPaginator;
   sort: MatSort;
 
-  constructor() {
+  constructor(public clienteService: ClienteService) {
     super();
+    this.clienteService.cargarClientes().subscribe(resp => {
+      this.clientes = resp;
+      console.log('CLIENTES' + this.clientes);
+    });
+    this.data = this.clientes;
+    // console.log('CLIENTE!' + EXAMPLE_DATA);
+    console.log('DATA!' + this.data);
   }
-
   /**
    * Connect this data source to the table. The table will only update when
    * the returned stream emits new items.
    * @returns A stream of the items to be rendered.
    */
-  connect(): Observable<DataTableItem[]> {
+  connect(): Observable<Cliente[]> {
     // Combine everything that affects the rendered data into one update
     // stream for the data-table to consume.
     const dataMutations = [
@@ -63,7 +58,7 @@ export class DataTableDataSource extends DataSource<DataTableItem> {
    * Paginate the data (client-side). If you're using server-side pagination,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getPagedData(data: DataTableItem[]) {
+  private getPagedData(data: Cliente[]) {
     const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
     return data.splice(startIndex, this.paginator.pageSize);
   }
@@ -72,7 +67,7 @@ export class DataTableDataSource extends DataSource<DataTableItem> {
    * Sort the data (client-side). If you're using server-side sorting,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getSortedData(data: DataTableItem[]) {
+  private getSortedData(data: Cliente[]) {
     if (!this.sort.active || this.sort.direction === '') {
       return data;
     }
@@ -80,7 +75,7 @@ export class DataTableDataSource extends DataSource<DataTableItem> {
     return data.sort((a, b) => {
       const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
-        case 'name': return compare(a.name, b.name, isAsc);
+        case 'nombre': return compare(a.nombre, b.nombre, isAsc);
         case 'id': return compare(+a.id, +b.id, isAsc);
         default: return 0;
       }
