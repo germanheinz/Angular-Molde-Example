@@ -33,6 +33,7 @@ export class FormClienteComponent implements OnInit {
   }
   update(): void {
     console.log(this.cliente.customerUrl);
+    this.cliente.facturas = null;
     this.clienteService.update(this.cliente)
       .subscribe(
         json => {

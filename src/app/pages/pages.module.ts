@@ -4,7 +4,7 @@ import { PAGES_ROUTES } from './pages.routes';
 
 import { SharedModule } from '../shared/shared.module';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 // ng2-charts
@@ -28,6 +28,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatListModule, MatIconModule, MatToolbarModule, MatSidenavModule } from '@angular/material';
 import { DataTableComponent } from './data-table/data-table.component';
 import { DetalleFacturaComponent } from './factura/detalle-factura.component';
+import { FacturasComponent } from './facturas/facturas.component';
 
 @NgModule({
     declarations: [
@@ -40,7 +41,8 @@ import { DetalleFacturaComponent } from './factura/detalle-factura.component';
         PaginatorComponent,
         PerfilComponent,
         DataTableComponent,
-        DetalleFacturaComponent
+        DetalleFacturaComponent,
+        FacturasComponent
     ],
     exports: [
         DashboardComponent,
@@ -58,7 +60,8 @@ import { DetalleFacturaComponent } from './factura/detalle-factura.component';
         MatListModule,
         MatTableModule,
         MatPaginatorModule,
-        MatSortModule
+        MatSortModule,
+        ReactiveFormsModule
     ]
 })
 export class PagesModule { }

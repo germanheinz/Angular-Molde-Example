@@ -11,6 +11,7 @@ import { AuthGuard } from '../guards/auth.guard';
 import { RoleGuard } from '../guards/role.guard';
 import { DataTableComponent } from './data-table/data-table.component';
 import { DetalleFacturaComponent } from './factura/detalle-factura.component';
+import { FacturasComponent } from './facturas/facturas.component';
 
 
 const pagesRoutes: Routes = [
@@ -28,6 +29,7 @@ const pagesRoutes: Routes = [
             { path: 'clientes/page/:page', component: ClientesComponent, data: { titulo: 'Pages' } },
             { path: 'clientes/perfil/:id', component: PerfilComponent, data: { titulo: 'Pages' } },
             { path: 'clientes/factura/:id', component: DetalleFacturaComponent, data: { titulo: 'Factura' } },
+            { path: 'clientes/factura/form/:clienteId', component: FacturasComponent, data: { titulo: 'FormFactura' } },
             { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
         ]
     }

@@ -6,6 +6,10 @@ import swal from 'sweetalert';
 import { HttpEventType } from '@angular/common/http';
 import { ModalService } from '../../services/modal/modal.service';
 
+import { Factura } from '../../models/factura.model';
+import { FacturaService } from 'src/app/services/service.index';
+
+
 @Component({
   selector: 'app-perfil',
   templateUrl: './perfil.component.html',
@@ -21,7 +25,8 @@ export class PerfilComponent implements OnInit {
 // ActivatedRoute es para editar un cliente para podernos subscribir cuando cambia un parametro en ID
   constructor(public clienteService: ClienteService,
               public activatedRoute: ActivatedRoute,
-              public modalService: ModalService) { }
+              public modalService: ModalService, 
+              public facturaService: FacturaService) { }
 
   ngOnInit() {
   }
@@ -64,8 +69,12 @@ export class PerfilComponent implements OnInit {
     this.fotoSeleccionada = null;
     this.progreso = 0;
   }
-
-
-
-
+  delete(factura: Factura) {
+    // tslint:disable-next-line: no-unused-expression
+    this.facturaService.delete(factura.id).subscribe(() =>{
+    this.cliente.facturas = this.cliente.facturas.filter(f => f !== factura)
+    swal('factura Eliminada', `Factura ${factura.descripcion} eliminado`, 'success');
+    });
+      // this.facturaService.delete(factura).subscribe(cliente => {
+      }
 }

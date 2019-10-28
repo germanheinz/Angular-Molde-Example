@@ -24,7 +24,7 @@ export class ClienteService {
     public usuarioService: UsuarioService
     ) {
     console.log('Servicio cargar clientes');
-    this.cargarClientes();
+    // this.cargarClientes();
    }
 
   private agregarAuthorizationHeader() {

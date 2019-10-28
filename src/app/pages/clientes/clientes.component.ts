@@ -4,7 +4,7 @@ import { ClienteService } from '../../services/cliente/cliente.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalService } from '../../services/modal/modal.service';
 import { UsuarioService } from '../../services/auth/usuario.service';
-import { IfStmt } from '@angular/compiler';
+import swal from 'sweetalert';
 
 
 @Component({
@@ -20,14 +20,18 @@ export class ClientesComponent implements OnInit {
   paginadorPadre: any;
   clienteSeleccionado: Cliente;
   tablePadre: any;
+  admin: boolean;
 
   constructor(public clienteService: ClienteService,
               public activatedRoute: ActivatedRoute,
               public modalService: ModalService,
-              public usuarioService: UsuarioService) {
+              public usuarioService: UsuarioService,
+              public router: Router) {
                }
 
   ngOnInit() {
+  this.admin = this.usuarioService.hasRole('ROLE_ADMIN');
+  console.log('ADMIN' + this.admin);
   this.activatedRoute.paramMap.subscribe(params => {
     // tslint:disable-next-line: prefer-const
     let page: number = +params.get('page');
@@ -77,5 +81,9 @@ export class ClientesComponent implements OnInit {
     abrirModal(cliente: Cliente) {
       this.clienteSeleccionado = cliente;
       this.modalService.abrirModal();
+    }
+    role(): boolean {
+      console.log('BOLEAN' + this.usuarioService.hasRole('USER_ROLE'));
+      return this.usuarioService.hasRole('ROLE_ADMIN');
     }
   }
